@@ -10,11 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var calculation: Calculation?
+    @IBOutlet weak var resultLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        calculation = CalculationImpl() { displayLabel in
+            print(displayLabel)
+            self.resultLabel.text = displayLabel
+        }
     }
-
-
+    
+    @IBAction func onButtonClick(_ sender: UIButton) {
+        let clickedButtonLabel = sender.titleLabel?.text ?? ""
+        print("onButtonClick = \(clickedButtonLabel)")
+        calculation?.parseAction(label: clickedButtonLabel)
+    }
 }
 
